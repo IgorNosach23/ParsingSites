@@ -1,3 +1,6 @@
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 public interface SiteStatistics {
@@ -7,4 +10,6 @@ public interface SiteStatistics {
     int getNumberQuestions() throws IOException;
 
     int getNumberUpvotes() throws IOException;  //???
+
+    JSONObject getJSONObject() throws JSONException;
 }

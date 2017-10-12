@@ -1,3 +1,5 @@
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -78,5 +80,13 @@ public class QuoraApi implements SiteStatistics {
         final Document initial = Jsoup.connect("https://www.quora.com/" + getNameUser()).get();
         final Element infUsers = initial.getElementsByClass("horizontal_scroll_inner").first();
         return infUsers;
+    }
+
+    public JSONObject getJSONObject() throws JSONException {
+       final JSONObject jsonObject = new JSONObject();
+        jsonObject.put("name",getNameUser());
+        jsonObject.put("answers",getNumberAnswers());
+        jsonObject.put("questions",getNumberQuestions());
+        return jsonObject;
     }
 }
