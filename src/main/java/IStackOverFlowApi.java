@@ -15,6 +15,6 @@ public interface IStackOverFlowApi {
 
     String getBadgeCount() throws IOException,JSONException;
 
-    void authenticate (String login,String password) throws IOException;
+    void authenticate(String login, String password) throws IOException;
 
 }

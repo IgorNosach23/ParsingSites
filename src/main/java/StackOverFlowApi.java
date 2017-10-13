@@ -62,13 +62,13 @@ public class StackOverFlowApi implements IStackOverFlowApi {
 
         Connection.Response loginForm = Jsoup.connect(STACK_OVER_FLOW_URL + "users/login").userAgent("Mozilla/5.0").execute(); //Get login page.
 
-        String fkey = "";  //Find parameter  "fkey" for method post.
-
         Pattern pattern = Pattern.compile("(fkey\":\")([^\".]+)\"");
 
         Matcher matcher = pattern.matcher(loginForm.parse().toString());
 
         matcher.find();
+
+        String fkey = "";  //Find parameter  "fkey" for method post.
 
         fkey = matcher.group(2);
 
@@ -93,17 +93,17 @@ public class StackOverFlowApi implements IStackOverFlowApi {
 
         Document document = response.parse();
 
-         Pattern pattern2 = Pattern.compile("(users)/(\\d+)/([^\".]+)");     //Find id and user name for URl parameters.
+        Pattern pattern2 = Pattern.compile("(users)/(\\d+)/([^\".]+)");     //Find id and user name for URl parameters.
 
         Matcher matcher2 = pattern2.matcher(document.toString());
 
-       matcher2.find();
+        matcher2.find();
 
-       String  id = matcher2.group(2);
+        String  id = matcher2.group(2);
 
         String userName = matcher2.group(3);
 
-        Connection.Response homePage = Jsoup.connect(STACK_OVER_FLOW_URL+"users/"+id+"/"+userName).userAgent("Mozilla/5.0").cookies(response.cookies()).execute();
+        Connection.Response homePage = Jsoup.connect(STACK_OVER_FLOW_URL + "users/" +id+ "/" +userName).userAgent("Mozilla/5.0").cookies(response.cookies()).execute();
 
         return homePage;
 
@@ -173,7 +173,8 @@ public class StackOverFlowApi implements IStackOverFlowApi {
     }
 
     public void logOut() throws IOException {
-        Jsoup.connect(STACK_OVER_FLOW_URL+"/users/logout").cookies(responseHomePage.cookies()).method(Connection.Method.GET).execute();
+
+        Jsoup.connect(STACK_OVER_FLOW_URL + "/users/logout").cookies(responseHomePage.cookies()).method(Connection.Method.GET).execute();
     }
 
 }

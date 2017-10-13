@@ -5,11 +5,10 @@ import java.io.IOException;
 
 public interface IQuoraApi {
 
-    int getNumberAnswers() throws IOException;
+    String getNumberAnswers() throws IOException, JSONException;
 
-    int getNumberQuestions() throws IOException;
+    String getNumberQuestions() throws IOException, JSONException;
 
-    int getNumberUpvotes() throws IOException;  //???
+    String getNumberUpvotes() throws IOException, JSONException;  //???
 
-    JSONObject getJSONObject() throws JSONException;
 }

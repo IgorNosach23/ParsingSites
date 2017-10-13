@@ -13,7 +13,7 @@ public class QuoraApi implements IQuoraApi {
     private String nameUser;
     private int numberAnswers;
     private int numberQuestions;
-    private int numberUpvotes;  //????
+    private int numberUpvotes;    //????
 
     public QuoraApi(String nameUser) throws IOException {
 
@@ -26,9 +26,13 @@ public class QuoraApi implements IQuoraApi {
     }
 
 
-    public int getNumberAnswers() {
+    public String getNumberAnswers() throws JSONException {
 
-        return numberAnswers;
+        final JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("answers",numberUpvotes);
+
+        return jsonObject.toString();
 
     }
 
@@ -38,20 +42,30 @@ public class QuoraApi implements IQuoraApi {
 
     }
 
-    public int getNumberQuestions() {
+    public String getNumberQuestions() throws JSONException {
 
-        return numberQuestions;
+        final JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("questions",numberQuestions);
+
+        return jsonObject.toString();
 
     }
 
     private void setNumberQuestions(int numberQuestions) throws IOException {
 
+
+
         this.numberQuestions = numberQuestions;
     }
 
-    public int getNumberUpvotes() {
+    public String getNumberUpvotes() throws JSONException {
 
-        return numberUpvotes;
+        final JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("upvotes",numberUpvotes);
+
+        return jsonObject.toString();
 
     }
 
@@ -61,7 +75,7 @@ public class QuoraApi implements IQuoraApi {
 
     }
 
-    public String getNameUser() {
+    private String getNameUser() {
 
         return nameUser;
     }
@@ -99,7 +113,6 @@ public class QuoraApi implements IQuoraApi {
         return formKey;
     }
 
-
     private Element parseUsersInformation() throws IOException {
 
         final Document initial = Jsoup.connect("https://www.quora.com/" + getNameUser()).get();
@@ -109,16 +122,4 @@ public class QuoraApi implements IQuoraApi {
         return infUsers;
     }
 
-    public JSONObject getJSONObject() throws JSONException {
-
-       final JSONObject jsonObject = new JSONObject();
-
-        jsonObject.put("name",getNameUser());
-
-        jsonObject.put("answers",getNumberAnswers());
-
-        jsonObject.put("questions",getNumberQuestions());
-
-        return jsonObject;
-    }
 }
