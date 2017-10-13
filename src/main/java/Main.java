@@ -16,7 +16,7 @@ public class Main {
 
             IStackOverFlowApi stackOverFlowApi = new StackOverFlowApi();
 
-            stackOverFlowApi.authenticate("igornosach23@gmail.com","Next622521");
+            stackOverFlowApi.authenticate("---","----");
 
             System.out.println(stackOverFlowApi.getNumberAnswers() + " " + stackOverFlowApi.getBadgeCount() +" " + stackOverFlowApi.getReputationCount() + " " + stackOverFlowApi.getNumberQuestions());
 
