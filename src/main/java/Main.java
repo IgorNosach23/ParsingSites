@@ -12,7 +12,12 @@ public class Main {
 
             QuoraApi statistics1 = new QuoraApi("Oliver-Emberton");
 
-            SiteStatistics statistics2 = new QuoraApi("John-Romero");
+            IQuoraApi statistics2 = new QuoraApi("John-Romero");
+
+            IStackOverFlowApi stackOverFlowApi = new StackOverFlowApi();
+            stackOverFlowApi.authenticate("----","----");
+            System.out.println(stackOverFlowApi.getNumberAnswers() + " " + stackOverFlowApi.getBadgeCount() +" " + stackOverFlowApi.getReputationCount() + " " + stackOverFlowApi.getNumberQuestions());
+            stackOverFlowApi.logOut();
 
             System.out.println("Olivers statistics of " + " answers:" + statistics1.getNumberAnswers()); //125
 

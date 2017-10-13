@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class QuoraApi implements SiteStatistics {
+public class QuoraApi implements IQuoraApi {
 
     private String nameUser;
     private int numberAnswers;

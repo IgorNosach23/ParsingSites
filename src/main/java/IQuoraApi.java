@@ -3,7 +3,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public interface SiteStatistics {
+public interface IQuoraApi {
 
     int getNumberAnswers() throws IOException;
 
