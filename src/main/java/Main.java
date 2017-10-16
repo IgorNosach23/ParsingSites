@@ -8,29 +8,21 @@ public class Main {
 
     public static void main(String[] args) throws IOException, JSONException {
 
-        Api statisticsQuora = new QuoraApi();
+        Api quora = new QuoraApi();
 
-        statisticsQuora.authenticate("Oliver-Emberton", "3923532");
+        quora.authenticate("----", "----");
 
-        Api statisticsQuora2 = new QuoraApi();
+        Api stackOverFlow = new StackOverFlowApi();
 
-        statisticsQuora2.authenticate("John-Romero", "dsd5");
+        stackOverFlow.authenticate("---", "---");
 
-        Api stackOverFlowApi = new StackOverFlowApi();
+        System.out.println(stackOverFlow.reputationJson());
 
-        stackOverFlowApi.authenticate("---", "---");
+        System.out.println(quora.reputationJson());
 
-        System.out.println(stackOverFlowApi.reputationJson());
+        stackOverFlow.logOut();
 
-        System.out.println(statisticsQuora.reputationJson());
-
-        System.out.println(statisticsQuora2.reputationJson());
-
-        stackOverFlowApi.logOut();
-
-        statisticsQuora.logOut();
-
-        statisticsQuora2.logOut();
+        quora.logOut();
 
     }
 
