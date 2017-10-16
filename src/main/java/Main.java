@@ -12,9 +12,9 @@ public class Main {
 
         statisticsQuora.authenticate("Oliver-Emberton", "3923532");
 
-        Api statisticsStackOverFlow = new QuoraApi();
+        Api statisticsQuora2 = new QuoraApi();
 
-        statisticsStackOverFlow.authenticate("John-Romero", "dsd5");
+        statisticsQuora2.authenticate("John-Romero", "dsd5");
 
         Api stackOverFlowApi = new StackOverFlowApi();
 
@@ -24,13 +24,13 @@ public class Main {
 
         System.out.println(statisticsQuora.reputationJson());
 
-        System.out.println(statisticsStackOverFlow.reputationJson());
+        System.out.println(statisticsQuora2.reputationJson());
 
         stackOverFlowApi.logOut();
 
         statisticsQuora.logOut();
 
-        statisticsStackOverFlow.logOut();
+        statisticsQuora2.logOut();
 
     }
 
