@@ -105,7 +105,7 @@ public class QuoraApi implements Api {
     }
 
     @Override
-    public void logOut() throws IOException, JSONException {
+    public void logOut() throws IOException {
 
         setNameUser("");
 

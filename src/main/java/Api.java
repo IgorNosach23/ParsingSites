@@ -8,6 +8,6 @@ public interface Api {
 
     String reputationJson() throws IOException, JSONException;
 
-    void logOut() throws IOException, JSONException;
+    void logOut() throws IOException;
 
 }
