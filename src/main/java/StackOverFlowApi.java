@@ -3,13 +3,12 @@ import org.json.JSONObject;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class StackOverFlowApi implements IStackOverFlowApi {
+public class StackOverFlowApi implements Api {
 
     private final String STACK_OVER_FLOW_URL = "https://stackoverflow.com/";
 
@@ -19,11 +18,11 @@ public class StackOverFlowApi implements IStackOverFlowApi {
 
     private Connection.Response responseHomePage;
 
-    public StackOverFlowApi() throws IOException {
-
-    }
-
     public void authenticate(String login, String password) throws IOException {
+
+        if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
+            throw new IOException("Incorrect login or password!");
+        }
 
         this.usersLogin = login;
 
@@ -73,10 +72,10 @@ public class StackOverFlowApi implements IStackOverFlowApi {
         fkey = matcher.group(2);
 
 
-        if (getUsersLogin()==null||getUsersPassword()==null){
+        if (getUsersLogin() == null || getUsersPassword() == null) {
 
             System.out.println("Please check you login or password! (method:\"authenticate(String login, String password)\" must be " +
-                     "performed before work)");
+                    "performed before work)");
         }
         Connection.Response response = Jsoup.connect(STACK_OVER_FLOW_URL + "users/login")
                 .userAgent("Mozilla/5.0")
@@ -99,30 +98,28 @@ public class StackOverFlowApi implements IStackOverFlowApi {
 
         matcher2.find();
 
-        String  id = matcher2.group(2);
+        String id = matcher2.group(2);
 
         String userName = matcher2.group(3);
 
-        Connection.Response homePage = Jsoup.connect(STACK_OVER_FLOW_URL + "users/" +id+ "/" +userName).userAgent("Mozilla/5.0").cookies(response.cookies()).execute();
+        Connection.Response homePage = Jsoup.connect(STACK_OVER_FLOW_URL + "users/" + id + "/" + userName).userAgent("Mozilla/5.0").cookies(response.cookies()).execute();
 
         return homePage;
 
     }
 
-    public String getBadgeCount() throws IOException, JSONException {
+    private int getBadgeCount() throws IOException, JSONException {
 
-      String element =   getResponseHomePage().parse()
-              .getElementsByClass("badgecount")
-              .text();
+        String element = getResponseHomePage().parse()
+                .getElementsByClass("badgecount")
+                .text();
 
-        JSONObject jsonObject = new JSONObject();
+        int badges = Integer.valueOf(element);
 
-        jsonObject.put("countBadges",element);
-
-      return jsonObject.toString();
+        return badges;
     }
 
-   public String getReputationCount() throws IOException, JSONException {
+    private int getReputationCount() throws IOException, JSONException {
 
         Pattern pattern = Pattern.compile("(Reputation <span>)[(](\\d)[)]+(</span>)");
 
@@ -132,14 +129,13 @@ public class StackOverFlowApi implements IStackOverFlowApi {
 
         String count = matcher.group(2);
 
-       JSONObject jsonObject = new JSONObject();
+        int reputation = Integer.valueOf(count);
 
-       jsonObject.put("countReputation",count);
+        return reputation;
 
-       return jsonObject.toString();
     }
 
-    public String getNumberAnswers() throws IOException, JSONException {
+    private int getNumberAnswers() throws IOException, JSONException {
 
         Pattern pattern = Pattern.compile("(Answers <span>)[(](\\d)[)]+(</span>)");
 
@@ -149,13 +145,12 @@ public class StackOverFlowApi implements IStackOverFlowApi {
 
         String count = matcher.group(2);
 
-        JSONObject jsonObject = new JSONObject();
+        int answers = Integer.valueOf(count);
 
-        jsonObject.put("countAnswers",count);
-
-        return jsonObject.toString();
+        return answers;
     }
-    public String getNumberQuestions() throws IOException, JSONException {
+
+    private int getNumberQuestions() throws IOException, JSONException {
 
         Pattern pattern = Pattern.compile("(Questions <span>)[(](\\d)[)]+(</span>)");
 
@@ -165,16 +160,29 @@ public class StackOverFlowApi implements IStackOverFlowApi {
 
         String count = matcher.group(2);
 
-        JSONObject jsonObject = new JSONObject();
+        int questions = Integer.valueOf(count);
 
-        jsonObject.put("countAnswers",count);
-
-        return jsonObject.toString();
+        return questions;
     }
 
     public void logOut() throws IOException {
-
         Jsoup.connect(STACK_OVER_FLOW_URL + "/users/logout").cookies(responseHomePage.cookies()).method(Connection.Method.GET).execute();
+    }
+
+    @Override
+    public String reputationJson() throws IOException, JSONException {
+
+        final JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("questions", getNumberQuestions());
+
+        jsonObject.put("answers", getNumberAnswers());
+
+        jsonObject.put("reputations", getReputationCount());
+
+        jsonObject.put("badges", getBadgeCount());
+
+        return jsonObject.toString();
     }
 
 }

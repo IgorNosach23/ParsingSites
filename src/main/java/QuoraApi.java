@@ -8,32 +8,18 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class QuoraApi implements IQuoraApi {
+public class QuoraApi implements Api {
 
     private String nameUser;
     private int numberAnswers;
     private int numberQuestions;
-    private int numberUpvotes;    //????
 
-    public QuoraApi(String nameUser) throws IOException {
-
-        this.nameUser = nameUser;
-
-        setNumberAnswers(parseUsersAnswers());
-
-        setNumberQuestions(parseUsersQuestions());
-
+    private int getNumberAnswers() {
+        return numberAnswers;
     }
 
-
-    public String getNumberAnswers() throws JSONException {
-
-        final JSONObject jsonObject = new JSONObject();
-
-        jsonObject.put("answers",numberUpvotes);
-
-        return jsonObject.toString();
-
+    private int getNumberQuestions() {
+        return numberQuestions;
     }
 
     private void setNumberAnswers(int numberAnswers) {
@@ -42,38 +28,13 @@ public class QuoraApi implements IQuoraApi {
 
     }
 
-    public String getNumberQuestions() throws JSONException {
-
-        final JSONObject jsonObject = new JSONObject();
-
-        jsonObject.put("questions",numberQuestions);
-
-        return jsonObject.toString();
-
-    }
 
     private void setNumberQuestions(int numberQuestions) throws IOException {
 
-
-
         this.numberQuestions = numberQuestions;
-    }
-
-    public String getNumberUpvotes() throws JSONException {
-
-        final JSONObject jsonObject = new JSONObject();
-
-        jsonObject.put("upvotes",numberUpvotes);
-
-        return jsonObject.toString();
 
     }
 
-    private void setNumberUpvotes(int numberUpvotes) {
-
-        this.numberUpvotes = numberUpvotes;
-
-    }
 
     private String getNameUser() {
 
@@ -113,6 +74,7 @@ public class QuoraApi implements IQuoraApi {
         return formKey;
     }
 
+
     private Element parseUsersInformation() throws IOException {
 
         final Document initial = Jsoup.connect("https://www.quora.com/" + getNameUser()).get();
@@ -122,4 +84,30 @@ public class QuoraApi implements IQuoraApi {
         return infUsers;
     }
 
+    @Override
+    public void authenticate(String userName, String password) throws IOException {
+        if (userName == null || userName.isEmpty()) {
+            throw new IOException("Incorrect name!");
+        }
+        setNameUser(userName);
+
+        setNumberAnswers(parseUsersAnswers());
+
+        setNumberQuestions(parseUsersQuestions());
+    }
+
+    @Override
+    public String reputationJson() throws IOException, JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("answers", getNumberAnswers());
+        jsonObject.put("questions", getNumberQuestions());
+        return jsonObject.toString();
+    }
+
+    @Override
+    public void logOut() throws IOException, JSONException {
+
+        setNameUser("");
+
+    }
 }

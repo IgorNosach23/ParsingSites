@@ -6,38 +6,39 @@ import java.io.IOException;
 public class Main {
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, JSONException {
 
-        try {
+        Api statisticsQuora = new QuoraApi();
 
-            QuoraApi statistics1 = new QuoraApi("Oliver-Emberton");
+        statisticsQuora.authenticate("Oliver-Emberton", "3923532");
 
-            IQuoraApi statistics2 = new QuoraApi("John-Romero");
+        Api statisticsStackOverFlow = new QuoraApi();
 
-            IStackOverFlowApi stackOverFlowApi = new StackOverFlowApi();
+        statisticsStackOverFlow.authenticate("John-Romero", "dsd5");
 
-            stackOverFlowApi.authenticate("---","----");
+        Api stackOverFlowApi = new StackOverFlowApi();
 
-            System.out.println(stackOverFlowApi.getNumberAnswers() + " " + stackOverFlowApi.getBadgeCount() +" " + stackOverFlowApi.getReputationCount() + " " + stackOverFlowApi.getNumberQuestions());
+        stackOverFlowApi.authenticate("---", "---");
 
-            stackOverFlowApi.logOut();
+        System.out.println(stackOverFlowApi.reputationJson());
 
-            System.out.println("Olivers statistics of " + " answers:" + statistics1.getNumberAnswers()); //125
+        System.out.println(statisticsQuora.reputationJson());
 
-            System.out.println("Olivers statistics of " + " questions:" + statistics1.getNumberQuestions()); //17
+        System.out.println(statisticsStackOverFlow.reputationJson());
 
-            System.out.println("Johnys statistics of " + " answers:" + statistics2.getNumberAnswers());//98
+        stackOverFlowApi.logOut();
 
-            System.out.println("Johnys statistics of " + " questions:" + statistics2.getNumberQuestions());//0
+        statisticsQuora.logOut();
 
+        statisticsStackOverFlow.logOut();
 
-        } catch (IOException | JSONException |NumberFormatException e) {
-
-            System.out.println(e.getMessage());
-
-        }
     }
+
 }
+
+
+
+
 
 
 
