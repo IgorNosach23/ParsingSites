@@ -10,7 +10,7 @@ public class Main {
 
         Api quora = new QuoraApi();
 
-        quora.authenticate("----", "----");
+        quora.authenticate("Igor", "Lazarev");
 
         Api stackOverFlow = new StackOverFlowApi();
 

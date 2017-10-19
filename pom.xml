@@ -35,7 +35,25 @@
         </dependency>
 
     </dependencies>
-
+<plugin>
+    <executions>
+        <execution>
+            <configuration>
+                <jsSrcDir>src/main/webapp/javascript</jsSrcDir>
+                <jsTestSrcDir>src/main/webapp/javascript-test</jsTestSrcDir>
+                <webDriverCapabilities>
+                    <webDriverCapability>
+                        <name>phantomjs.binary.path</name>
+                        <value>/xxx/yyy/phantomjs</value>
+                    </webDriverCapability>
+                </webDriverCapabilities>
+            </configuration>
+            <goals>
+                <goal>test</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
 
 
 </project>
