@@ -1,4 +1,4 @@
-# Site_parser
+# SiteParser
 ---
 
 Receiving information from sites and converting them to JSON.
