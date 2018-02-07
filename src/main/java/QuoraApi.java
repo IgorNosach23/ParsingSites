@@ -23,7 +23,6 @@ public class QuoraApi implements Api {
     private WebDriver _driver;
     private JavascriptExecutor _jsEngine;
 
-
     public QuoraApi() {
         setupWebDriver();
     }
@@ -40,11 +39,9 @@ public class QuoraApi implements Api {
         this.numberAnswers = numberAnswers;
     }
 
-
     private void setNumberQuestions(int numberQuestions) throws IOException {
         this.numberQuestions = numberQuestions;
     }
-
 
     private String getNameUser() {
         return nameUser;
@@ -69,7 +66,6 @@ public class QuoraApi implements Api {
         final int formKey = Integer.parseInt(m.group(1));
         return formKey;
     }
-
 
     private Element parseUsersInformation() throws IOException {
         final Document initial = Jsoup.connect("https://www.quora.com/" + getNameUser()).get();
